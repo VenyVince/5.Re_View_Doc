@@ -1,0 +1,28 @@
+API 명세서
+
+
+
+로그인/회원가입 페이지
+
+로그인 화면
+email, pw
+
+회원가입 화면
+email, pw, pw check, name, phone number
+
+아이디 찾기
+name, phone humber
+
+비밀번호 재설정
+email 
+
+certificated number, pw, pw_check
+
+
+메인 페이지
+
+
+api명: 장바구니 상품 추가
+method: post
+url: /api/cart/items
+필요테이블: cart, cart-product, ...
