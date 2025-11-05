@@ -1,0 +1,271 @@
+-- 1. BAUMANN ---------------------------------------------------
+CREATE TABLE baumann (
+    baumann_id      NUMBER          NOT NULL,
+    type            VARCHAR2(100)   NOT NULL,
+    first           VARCHAR2(100),
+    second          VARCHAR2(100),
+    third           VARCHAR2(100),
+    fourth          VARCHAR2(100),
+    CONSTRAINT PK_BAUMANN PRIMARY KEY (baumann_id)
+);
+
+-- 2. USER ------------------------------------------------------
+CREATE TABLE "USER" (
+    user_id         NUMBER          NOT NULL,
+    baumann_id      NUMBER,
+    password        VARCHAR2(255)   NOT NULL,
+    point           NUMBER,
+    phone_number    VARCHAR2(20),
+    id              VARCHAR2(100)   NOT NULL,
+    name            VARCHAR2(50)    NOT NULL,
+    email           VARCHAR2(100)   NOT NULL,
+    nickname        VARCHAR2(50),
+    manager         CHAR(1)         CHECK (manager IN ('0','1')) NOT NULL,
+    created_at      DATE            NOT NULL,
+    updated_at      DATE,
+    deleted_at      DATE,
+    CONSTRAINT PK_USER PRIMARY KEY (user_id),
+    CONSTRAINT FK_BAUMANN_TO_USER FOREIGN KEY (baumann_id)
+        REFERENCES baumann (baumann_id)
+);
+
+-- 3. ADDRESS ---------------------------------------------------
+CREATE TABLE address (
+    address_id      NUMBER          NOT NULL,
+    user_id         NUMBER          NOT NULL,
+    phone           VARCHAR2(20),
+    recipient       VARCHAR2(50),
+    postal_code     VARCHAR2(10),
+    address         VARCHAR2(200),
+    detail_address  VARCHAR2(200),
+    is_default      CHAR(1)         CHECK (is_default IN ('0','1')),
+    address_name    VARCHAR2(50),
+    CONSTRAINT PK_ADDRESS PRIMARY KEY (address_id),
+    CONSTRAINT FK_USER_TO_ADDRESS FOREIGN KEY (user_id)
+        REFERENCES "USER" (user_id)
+);
+
+-- 4. PRODUCT ---------------------------------------------------
+CREATE TABLE product (
+    product_id      NUMBER          NOT NULL,
+    prd_name        VARCHAR2(200)   NOT NULL,
+    prd_brand       VARCHAR2(200)   NOT NULL,
+    ingredient      CLOB            NOT NULL,
+    price           NUMBER          NOT NULL,
+    category        VARCHAR2(100)   NOT NULL,
+    stock           NUMBER,
+    rating          NUMBER(2,1),
+    description     CLOB,
+    is_sold_out     CHAR(1)         CHECK (is_sold_out IN ('0','1')),
+    review_count    NUMBER,
+    created_at      DATE            NOT NULL,
+    updated_at      DATE,
+    deleted_at      DATE,
+    CONSTRAINT PK_PRODUCT PRIMARY KEY (product_id)
+);
+
+COMMENT ON COLUMN product.price IS '배송비 포함 총 가격';
+
+-- 5. PRODUCT_BAUMANN -------------------------------------------
+CREATE TABLE product_baumann (
+    product_baumann_id   NUMBER  NOT NULL,
+    baumann_id           NUMBER  NOT NULL,
+    product_id           NUMBER  NOT NULL,
+    CONSTRAINT PK_PRODUCT_BAUMANN PRIMARY KEY (product_baumann_id),
+    CONSTRAINT FK_BAUMANN_TO_PRODUCT_BAUMANN FOREIGN KEY (baumann_id)
+        REFERENCES baumann (baumann_id),
+    CONSTRAINT FK_PRODUCT_TO_PRODUCT_BAUMANN FOREIGN KEY (product_id)
+        REFERENCES product (product_id)
+);
+
+-- 6. TAG --------------------------------------------------------
+CREATE TABLE tag (
+    tag_id      NUMBER          NOT NULL,
+    name        VARCHAR2(50)    NOT NULL,
+    CONSTRAINT PK_TAG PRIMARY KEY (tag_id)
+);
+
+-- 7. PRODUCT_TAG ------------------------------------------------
+CREATE TABLE product_tag (
+    tag_id      NUMBER NOT NULL,
+    product_id  NUMBER NOT NULL,
+    CONSTRAINT PK_PRODUCT_TAG PRIMARY KEY (tag_id, product_id),
+    CONSTRAINT FK_TAG_TO_PRODUCT_TAG FOREIGN KEY (tag_id)
+        REFERENCES tag (tag_id),
+    CONSTRAINT FK_PRODUCT_TO_PRODUCT_TAG FOREIGN KEY (product_id)
+        REFERENCES product (product_id)
+);
+
+-- 8. PAYMENT_METHODS -------------------------------------------
+CREATE TABLE payment_methods (
+    payment_id      NUMBER          NOT NULL,
+    user_id         NUMBER          NOT NULL,
+    card_company    VARCHAR2(50),
+    card_number     VARCHAR2(20),
+    is_default      CHAR(1)         CHECK (is_default IN ('0','1')),
+    is_active       CHAR(1)         CHECK (is_active IN ('0','1')),
+    CONSTRAINT PK_PAYMENT_METHODS PRIMARY KEY (payment_id),
+    CONSTRAINT FK_USER_TO_PAYMENT_METHODS FOREIGN KEY (user_id)
+        REFERENCES "USER" (user_id)
+);
+
+-- 9. ORDER ------------------------------------------------------
+CREATE TABLE "ORDER" (
+    order_id        NUMBER          NOT NULL,
+    user_id         NUMBER          NOT NULL,
+    address_id      NUMBER          NOT NULL,
+    payment_id      NUMBER          NOT NULL,
+    total_price     NUMBER(12,2)    NOT NULL,
+    created_at      DATE            NOT NULL,
+    order_status    VARCHAR2(20)    NOT NULL,
+    delivery_num    VARCHAR2(50),
+    CONSTRAINT PK_ORDER PRIMARY KEY (order_id),
+    CONSTRAINT FK_USER_TO_ORDER FOREIGN KEY (user_id)
+        REFERENCES "USER" (user_id),
+    CONSTRAINT FK_ADDRESS_TO_ORDER FOREIGN KEY (address_id)
+        REFERENCES address (address_id),
+    CONSTRAINT FK_PAYMENT_TO_ORDER FOREIGN KEY (payment_id)
+        REFERENCES payment_methods (payment_id)
+);
+
+-- 10. ORDER_ITEM -----------------------------------------------
+CREATE TABLE order_item (
+    order_item_id   NUMBER          NOT NULL,
+    product_id      NUMBER          NOT NULL,
+    order_id        NUMBER          NOT NULL,
+    product_name    VARCHAR2(200)   NOT NULL,
+    quantity        NUMBER          NOT NULL,
+    product_price   NUMBER          NOT NULL,
+    CONSTRAINT PK_ORDER_ITEM PRIMARY KEY (order_item_id),
+    CONSTRAINT FK_PRODUCT_TO_ORDER_ITEM FOREIGN KEY (product_id)
+        REFERENCES product (product_id),
+    CONSTRAINT FK_ORDER_TO_ORDER_ITEM FOREIGN KEY (order_id)
+        REFERENCES "ORDER" (order_id)
+);
+
+-- 11. POINT_HISTORY --------------------------------------------
+CREATE TABLE point_history (
+    point_history_id    NUMBER          NOT NULL,
+    order_id            NUMBER          NOT NULL,
+    user_id             NUMBER          NOT NULL,
+    amount              NUMBER          NOT NULL,
+    type                VARCHAR2(10)    CHECK (type IN ('EARN', 'USE')) NOT NULL,
+    created_at          DATE            NOT NULL,
+    description         VARCHAR2(200),
+    CONSTRAINT PK_POINT_HISTORY PRIMARY KEY (point_history_id),
+    CONSTRAINT FK_ORDER_TO_POINT_HISTORY FOREIGN KEY (order_id)
+        REFERENCES "ORDER" (order_id),
+    CONSTRAINT FK_USER_TO_POINT_HISTORY FOREIGN KEY (user_id)
+        REFERENCES "USER" (user_id)
+);
+
+-- 12. CART_ITEMS -----------------------------------------------
+CREATE TABLE cart_items (
+    cart_items_id   NUMBER  NOT NULL,
+    user_id         NUMBER  NOT NULL,
+    product_id      NUMBER  NOT NULL,
+    quantity        NUMBER,
+    CONSTRAINT PK_CART_ITEMS PRIMARY KEY (cart_items_id, user_id),
+    CONSTRAINT FK_USER_TO_CART_ITEMS FOREIGN KEY (user_id)
+        REFERENCES "USER" (user_id),
+    CONSTRAINT FK_PRODUCT_TO_CART_ITEMS FOREIGN KEY (product_id)
+        REFERENCES product (product_id)
+);
+
+-- 13. WISH_ITEM -------------------------------------------------
+CREATE TABLE wish_item (
+    wish_item_id    NUMBER  NOT NULL,
+    user_id         NUMBER  NOT NULL,
+    product_id      NUMBER  NOT NULL,
+    CONSTRAINT PK_WISH_ITEM PRIMARY KEY (wish_item_id),
+    CONSTRAINT FK_USER_TO_WISH_ITEM FOREIGN KEY (user_id)
+        REFERENCES "USER" (user_id),
+    CONSTRAINT FK_PRODUCT_TO_WISH_ITEM FOREIGN KEY (product_id)
+        REFERENCES product (product_id)
+);
+
+-- 14. REVIEW ----------------------------------------------------
+CREATE TABLE review (
+    review_id       NUMBER          NOT NULL,
+    product_id      NUMBER          NOT NULL,
+    user_id         NUMBER          NOT NULL,
+    content         CLOB            NOT NULL,
+    rating          NUMBER(2,1)     NOT NULL,
+    like_count      NUMBER,
+    dislike_count   NUMBER,
+    is_selected     CHAR(1) CHECK (is_selected IN ('0','1')),
+    created_at      DATE            NOT NULL,
+    updated_at      DATE,
+    deleted_at      DATE,
+    is_checked      CHAR(1) CHECK (is_checked IN ('0','1')),
+    CONSTRAINT PK_REVIEW PRIMARY KEY (review_id),
+    CONSTRAINT FK_PRODUCT_TO_REVIEW FOREIGN KEY (product_id)
+        REFERENCES product (product_id),
+    CONSTRAINT FK_USER_TO_REVIEW FOREIGN KEY (user_id)
+        REFERENCES "USER" (user_id)
+);
+
+-- 15. REVIEW_COMMENT --------------------------------------------
+CREATE TABLE review_comment (
+    review_comment_id   NUMBER  NOT NULL,
+    review_id           NUMBER  NOT NULL,
+    user_id             NUMBER  NOT NULL,
+    content             CLOB    NOT NULL,
+    created_at          DATE    NOT NULL,
+    updated_at          DATE,
+    deleted_at          DATE,
+    CONSTRAINT PK_REVIEW_COMMENT PRIMARY KEY (review_comment_id),
+    CONSTRAINT FK_REVIEW_TO_COMMENT FOREIGN KEY (review_id)
+        REFERENCES review (review_id),
+    CONSTRAINT FK_USER_TO_COMMENT FOREIGN KEY (user_id)
+        REFERENCES "USER" (user_id)
+);
+
+-- 16. REVIEW_IMAGES ---------------------------------------------
+CREATE TABLE review_images (
+    review_image_id NUMBER NOT NULL,
+    review_id       NUMBER NOT NULL,
+    image_url       VARCHAR2(500),
+    CONSTRAINT PK_REVIEW_IMAGES PRIMARY KEY (review_image_id),
+    CONSTRAINT FK_REVIEW_TO_REVIEW_IMAGES FOREIGN KEY (review_id)
+        REFERENCES review (review_id)
+);
+
+-- 17. REVIEW_TAG ------------------------------------------------
+CREATE TABLE review_tag (
+    tag_id      NUMBER  NOT NULL,
+    review_id   NUMBER  NOT NULL,
+    CONSTRAINT PK_REVIEW_TAG PRIMARY KEY (tag_id, review_id),
+    CONSTRAINT FK_TAG_TO_REVIEW_TAG FOREIGN KEY (tag_id)
+        REFERENCES tag (tag_id),
+    CONSTRAINT FK_REVIEW_TO_REVIEW_TAG FOREIGN KEY (review_id)
+        REFERENCES review (review_id)
+);
+
+-- 18. PRODUCT_IMAGE ---------------------------------------------
+CREATE TABLE product_image (
+    prd_img_id  NUMBER          NOT NULL,
+    product_id  NUMBER          NOT NULL,
+    image_url   VARCHAR2(500),
+    CONSTRAINT PK_PRODUCT_IMAGE PRIMARY KEY (prd_img_id),
+    CONSTRAINT FK_PRODUCT_TO_PRODUCT_IMAGE FOREIGN KEY (product_id)
+        REFERENCES product (product_id)
+);
+
+-- 19. QNA -------------------------------------------------------
+CREATE TABLE qna (
+    qna_id      NUMBER          NOT NULL,
+    product_id  NUMBER          NOT NULL,
+    user_id     NUMBER          NOT NULL,
+    title       VARCHAR2(200)   NOT NULL,
+    content     CLOB            NOT NULL,
+    answer      CLOB,
+    created_at  DATE            NOT NULL,
+    update_at   DATE,
+    deleted_at  DATE,
+    CONSTRAINT PK_QNA PRIMARY KEY (qna_id),
+    CONSTRAINT FK_PRODUCT_TO_QNA FOREIGN KEY (product_id)
+        REFERENCES product (product_id),
+    CONSTRAINT FK_USER_TO_QNA FOREIGN KEY (user_id)
+        REFERENCES "USER" (user_id)
+);
