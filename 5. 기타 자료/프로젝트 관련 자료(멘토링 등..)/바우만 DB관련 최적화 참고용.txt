@@ -1,0 +1,48 @@
+1.
+현재 구조 + null 허용 + 단순 비교
+first ~ fourth 컬럼 유지 + 
+SELECT *
+FROM product
+WHERE (first  IS NULL OR first  = :user_first)
+  AND (second IS NULL OR second = :user_second)
+  AND (third  IS NULL OR third  = :user_third)
+  AND (fourth IS NULL OR fourth = :user_fourth);
+: 널 허용으로 부분 매칭 가능, 직관적이고 구현이 간단
+: 인덱스는 각 컬럼에 걸 수 있지만 복합검색이 많으면 속도 저하 가능
+
+
+2.
+인덱스를 통한 효율화(각 컬럼에 별도 인덱스 추가)
+CREATE INDEX idx_product_first  ON product(first);
+CREATE INDEX idx_product_second ON product(second);
+CREATE INDEX idx_product_third  ON product(third);
+CREATE INDEX idx_product_fourth ON product(fourth);
+추천쿼리에서 인덱스를 활용 -> 조회속도 향상
+
+
+3. 함수나 뷰로 추천 로직 캡슐화
+CREATE OR REPLACE VIEW product_recommend AS
+SELECT *
+FROM product
+WHERE (first  IS NULL OR first  = :user_first)
+  AND (second IS NULL OR second = :user_second)
+  AND (third  IS NULL OR third  = :user_third)
+  AND (fourth IS NULL OR fourth = :user_fourth);
+캡슐화를 해놓고
+SELECT * FROM product_recommend;
+위 내용으로 바로 조회
+
+
+4. 비트 연산 활용
+각 축을 0/1값으로 변환하여 4비트 숫자로 저장
+null허용시 특정 비트는 마스크로 처리
+비교시 숫자 and 연산 -> 단일 컬럼 비교만으로 추천 가능
+: 성능 좋고 sql 간단
+: 직관성이 떨어지고 데이터 관리가 복잡
+
+
+
+
+
+
+Review 베스트 리뷰 추출
