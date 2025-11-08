@@ -1,0 +1,21 @@
+1. 오른쪽 사이드바에서 데이터 베이스 찾기.
+1-1 없으면 plugin들어가서 database어쩌구 sql된거 다운로드
+
+2. database -> data source -> oracle
+
+Name: @db.croffledev.kr
+Port: 31523
+Service: XEPDB1
+Authentication: User&Password
+User: review
+Password: Pass1234
+URL: jdbc:oracle:thin:@//db.croffledev.kr:31523/XEPDB1
+
+3. 위 사항 입력 후 test connection해서 확인해보고 잘 되면 OK
+
+
+4. 오른쪽 상단 디버그창의 바로 왼쪽에 ReviewApplicaton -> edit configuration -> modify options -> environent variables 
+DBID: review
+DBPW: Pass1234
+DBURL: jdbc:oracle:thin:@//db.croffledev.kr:31523/XEPDB1
+하고 OK

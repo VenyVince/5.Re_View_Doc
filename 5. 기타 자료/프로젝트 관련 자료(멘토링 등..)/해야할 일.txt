@@ -1,0 +1,20 @@
+오늘 해야할 일
+- 후기 블로그화
+- API 연동 어떻게하는지 확인해보기
+
+월요일에 할 일
+- API 연동
+- UI 글자 크기 키우고 색상 진하게
+- 후기 강화에 대한 내용 추가
+
+feature에서 작업중이라고 할 때(feature에 checkout한 상태)
+1. dev into feature로 merge (sourcetree기준: 원격 origin - develop 오른클릭 - origin/develop브랜치을 현재 브랜치에 가져와 병합하기 선택
+2. feature 안정화 및 테스트
+3. dev로 merge
+
+
+
+1. API 통신 확인해보기 - postman으로 확인은 해봄
+2. 글자 크기 키우고 색상 진하게
+3. 후기와 바우만이 접목이 되어야 함.
+	- 후기 블로그화

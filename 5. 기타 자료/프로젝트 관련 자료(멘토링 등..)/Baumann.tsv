@@ -1,0 +1,81 @@
+1	DSPW	D	S	P	W
+2	DSPT	D	S	P	T
+3	DSP_	D	S	P	
+4	DSNW	D	S	N	W
+5	DSNT	D	S	N	T
+6	DSN_	D	S	N	
+7	DS_W	D	S		W
+8	DS_T	D	S		T
+9	DS__	D	S		
+10	DRPW	D	R	P	W
+11	DRPT	D	R	P	T
+12	DRP_	D	R	P	
+13	DRNW	D	R	N	W
+14	DRNT	D	R	N	T
+15	DRN_	D	R	N	
+16	DR_W	D	R		W
+17	DR_T	D	R		T
+18	DR__	D	R		
+19	D_PW	D		P	W
+20	D_PT	D		P	T
+21	D_P_	D		P	
+22	D_NW	D		N	W
+23	D_NT	D		N	T
+24	D_N_	D		N	
+25	D__W	D			W
+26	D__T	D			T
+27	D___	D			
+28	OSPW	O	S	P	W
+29	OSPT	O	S	P	T
+30	OSP_	O	S	P	
+31	OSNW	O	S	N	W
+32	OSNT	O	S	N	T
+33	OSN_	O	S	N	
+34	OS_W	O	S		W
+35	OS_T	O	S		T
+36	OS__	O	S		
+37	ORPW	O	R	P	W
+38	ORPT	O	R	P	T
+39	ORP_	O	R	P	
+40	ORNW	O	R	N	W
+41	ORNT	O	R	N	T
+42	ORN_	O	R	N	
+43	OR_W	O	R		W
+44	OR_T	O	R		T
+45	OR__	O	R		
+46	O_PW	O		P	W
+47	O_PT	O		P	T
+48	O_P_	O		P	
+49	O_NW	O		N	W
+50	O_NT	O		N	T
+51	O_N_	O		N	
+52	O__W	O			W
+53	O__T	O			T
+54	O___	O			
+55	_SPW		S	P	W
+56	_SPT		S	P	T
+57	_SP_		S	P	
+58	_SNW		S	N	W
+59	_SNT		S	N	T
+60	_SN_		S	N	
+61	_S_W		S		W
+62	_S_T		S		T
+63	_S__		S		
+64	_RPW		R	P	W
+65	_RPT		R	P	T
+66	_RP_		R	P	
+67	_RNW		R	N	W
+68	_RNT		R	N	T
+69	_RN_		R	N	
+70	_R_W		R		W
+71	_R_T		R		T
+72	_R__		R		
+73	__PW			P	W
+74	__PT			P	T
+75	__P_			P	
+76	__NW			N	W
+77	__NT			N	T
+78	__N_			N	
+79	___W				W
+80	___T				T
+81	____				
