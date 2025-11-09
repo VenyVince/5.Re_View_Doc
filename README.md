@@ -7,6 +7,15 @@
 
 # API 테스트 예제 (React ↔ Spring Boot)
 
+## 0. 첨언
+아래 내용은 **Re:View** 팀원들을 위한 내용입니다. 
+기본적으로 현재 저희 팀은 FE서버와 BE서버를 따로 두고있습니다.
+각각 localhost 3000 / 8080입니다.
+
+BE서버의 경우 바로 인텔리제이에서 프로젝트 시작(ReviewApplication 빌드)하면 켜지고
+FE 서버의 경우 npm run View(frontend)라고 터미널에 입력하면 아마 동작할거에요. 
+이외 명령어로 동작하는 경우에는 View또는 frontend의 src폴더와 동일한 위치에 있는 package.json을 수정하면 됩니다.
+
 ## 1. 개요
 
 이 프로젝트는 **React**에서 **Spring Boot** API를 호출하여 데이터를 받아 화면에 표시하는 간단한 예제입니다.

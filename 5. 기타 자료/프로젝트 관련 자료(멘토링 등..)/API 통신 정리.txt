@@ -1,5 +1,7 @@
 API 통신 정리(Get 요청으로 예시)
 
+프론트랑 백앤드랑 서버 따로 구동한다는 걸 전제로 한 예시입니다.
+
 React (http://localhost:3000)				FE
        ↓
 Spring Controller (TestProductController)	BE
