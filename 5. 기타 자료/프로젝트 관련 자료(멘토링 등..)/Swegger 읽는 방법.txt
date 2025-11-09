@@ -1,0 +1,14 @@
+Swegger 읽는 방법
+
+API 호출 타입 확인(Get, Post, Patch(Put), Delete)
+Get: 내용 조회 요청
+Post: 내용 등록 요청
+Patch(Put): 내용 수정 요청
+Delete: 내용 삭제 요청
+
+1. /api/~/{m}에서 (중괄호에 있는)m은 상황에 따라 바뀔 수 있는 변수
+2. 요청시 데이터는 RequestBody와 Parameters로 귀결.(둘의 차이점은 필요시 찾아보시면 좋겠어요)
+3. 통상적으로 json형식으로 통신함
+4. tags는 카테고리 확인 및 정리용
+5. in에 들어가는 내용은 path(required: true), query(required: false)가 존재. query의 경우 required true로 수정 가능.
+

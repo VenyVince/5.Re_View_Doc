@@ -1,0 +1,107 @@
+API 통신 정리(Get 요청으로 예시)
+
+React (http://localhost:3000)				FE
+       ↓
+Spring Controller (TestProductController)	BE
+       ↓
+Spring Service (TestProductService)			BE
+       ↓
+하드코딩된 리스트 생성 → DTO에 담기		BE(실제로는 mapper를 통해서 데이터를 가져와서 DTO에 담아줌)
+       ↓
+JSON 형태로 변환되어 응답				BE
+       ↓
+React 화면에 표시					FE
+
+
+TestProduct.js
+...
+useEffect(() => {
+  fetch("http://localhost:8080/api/test/products") 	//end포인트에 Get요청
+    .then(res => res.json())
+    .then(data => console.log(data));
+}, []);
+...
+
+TestCorsConfig.java : 얘가 
+...
+@Configuration
+public class TestCorsConfig {
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/api/test/**") 	//api/test/**에 들어온 요청을 확인 및 허용함
+                        .allowedOrigins("http://localhost:3000")
+                        .allowedMethods("*");			// 모든 메소드 허용(Get, Post, Put/Patch, Delete
+            }
+        };
+    }
+}
+...
+
+
+TestProductController.java
+...
+@GetMapping
+public TestProductResponseDTO getProducts() {
+    return testProductService.getTestProducts(); 		//testProductService호출
+}
+
+
+TestProductService.java
+...
+public TestProductResponseDTO getTestProducts() {
+    TestProductDTO p1 = new TestProductDTO(1L, "샴푸", "BrandA", 12000);
+    TestProductDTO p2 = new TestProductDTO(2L, "린스", "BrandB", 15000);
+    TestProductDTO p3 = new TestProductDTO(3L, "바디워시", "BrandC", 9000);
+
+    return new TestProductResponseDTO(Arrays.asList(p1, p2, p3));	//데이터(TestProductDTO p1~p3) 리턴
+}
+...
+
+
+TestProductResonseDTO.java
+...
+public TestProductResponseDTO(List<TestProductDTO> products) {
+    this.products = products;								//데이터 필드에 저장
+}
+...
+
+
+json파일( api dog참고)
+{
+  "products": [
+    { "id": 1, "name": "샴푸", "brand": "BrandA", "price": 12000 },
+    { "id": 2, "name": "린스", "brand": "BrandB", "price": 15000 },
+    { "id": 3, "name": "바디워시", "brand": "BrandC", "price": 9000 }
+  ]
+}
+
+
+TestProduct.js
+...
+{data.products?.map(p => (
+  <div key={p.id}>{p.name} - {p.brand} ({p.price}원)</div>			// json 변환 데이터 받아와서 데이터 수정 후 표기
+))}
+...
+
+
+
+
+1L, "샴푸", "BrandA", 12000		→		샴푸 / BrandA / 12000원
+2L, "린스", "BrandB", 15000		→		린스 / BrandB / 15000원
+3L, "바디워시", "BrandC", 9000	→		바디워시 / BrandC / 9000원
+
+그렇다면 왜 리터(L)는 안나올까요?
+
+			↓
+
+    public static class TestProductDTO {
+        private Long id;
+        private String name;
+        private String brand;
+        private double price;
+    }
+DTO에 정의를 안해놨으니까!!!!!!!!!!!!!!!!!!!!!
