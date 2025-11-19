@@ -2,22 +2,17 @@
 
 
 해야할 일 
-2. Review get / user_id(me)
-3. 결제 API 및 비즈니스 로직 구현
-1. 구매내역 조회 및 상풍 확인(배송중 등) 조회 API 및 비즈니스 로직 구현
+
+1. 배송지, 결제(윤성, 재빈)
+
+2. 포인트 
 
 
 
-
-1. 401나오면 처리
-2. 로그인하면 다음 페이지로 넘어가는 부분(admin, 일반유저 처리)
-3. onIconClick에서 오류가 나옴
-	ㄴ Warning: Unknown event handler property `onIconClick`. It will be ignored.
 
 // 테이블정리 및 데이터 생성
-    - TAG 연관 테이블 삭제
-    - USER_TABLE에 맞춰서 WISH_ITEM, PAYMENT_METHODS, QNA, REVIEW_COMMENT 데이터 GPT로 생성시켜서 넣기
-생각해보니까. 리뷰 오더한 사람만 가능해서 지금 만들면 안될거같음. 만들거면 오더내용까지 같이 만들어야할듯? 포인트도.
+- TAG 연관 테이블 삭제
+- Payment_Method is_default랑 is_active 삭제	
 
 
 --------------------------------------------------------------------------------------------------------------------------------------------
