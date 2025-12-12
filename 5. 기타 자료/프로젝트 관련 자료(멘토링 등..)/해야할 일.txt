@@ -1,21 +1,38 @@
-상품, 리뷰 페이지
-리뷰 자세히 보기에서 리뷰 페이지 - 상품 페이지 연결
+1. ec2 깃 설치
+sudo apt update
+sudo apt install git -y
+git --version
 
-마이 페이지
+2. self-hosted runner 상태 확인
+sudo systemctl status actions.runner.Re_View.service
 
-배송지 관리 부분에서 배송지 추가 버튼 누르면 새 배송지 추가할 수 있게
+3. 도커 컴포즈 환경 확인(기존 컨테이너 상태 확인)
+docker compose ps
 
-포인트 히스토리 출력
+4. Github Actions 워크플로우 테스트
+- 로컬에서 코드 main에 푸시하면 github actions 실행되는지 확인
+- EC2에서 컨테이너 정상적으로 재시작되고 로그 출력 되는지 확인
 
-작성후기에 검색하기
+5 배포 방식 확정(굳이 할 필요 없긴 함)
+- 기존 워크플로우는 self-hosted runner에서 빌드
 
-결제 페이지
-- 구매시 포인트 초과 금지
+*만약 배포방식 변경될 시 해야할 일
+
+1. ec2 깃설치
+
+2. github actin 워크플로우 준비
+- 코드 체크아웃
+- 빌드 & 테스트 수행
+- 배포용 아티팩트 생성
+- ec2 전송
+- ec2 배포 스크립트 실행
+
+3. EC2 배포 스크립트 준비
+
+4.GitHub Actions 워크플로우 테스트 및 포트 확인
 
 
-api연결
-마이페이지
-- 주문배송관리
-- 찜상품
-- 결제
+
+
+
 

@@ -1,0 +1,90 @@
+intro와 문제 정의
+서비스 소개 및 핵심 가치
+주요 기능 상세 소개
+기술 아키텍처 & 개발 스택
+추천 알고리즘 & 데이터 모델링
+시연(영상)
+도전 과제 & 향후 계획
+Q&A
+
+저희 프로젝트가 
+
+
+
+프로젝트 개요( 프로젝트 기획 배경 및 목표 / 구성원 및 역할 / Work-flow(WBS) )
+프로젝트 설계( 수행 절차 및 방법 / DB 설계 / 개발 일정 )
+개발 내용( 적용 기술 / 주요 구현 기능 / 구현 영상 )
+개발 후기 및 느낀점 (향후 개선 사항 및 기대 효과 / 향후 프로젝트 보완 계획 / 프로젝트 진행 소감)
+
+바우만 추천 로직 구현
+
+1. 프로젝트 개요
+
+프로젝트 기획 배경 및 목표 : 
+- MLP에서 제공한 주제 중 하나인 사용자 후기를 기반으로 한 쇼핑몰에 더해 사용자 피부 타입을 추가
+- 배경
+: 최근 사람들이 피부에 관심이 많아졌는데 단순히 후기만으로는 자신의 피부에 맞는지를 확인하기 어렵다고 생각, 그래서 좀 더 구체적인 예시인 바우만 피부타입을 사용자에게 제시
+
+- 목표
+: 사용자에게 알맞은 화장품을 추천하고 사용자의 만족도를 올리기 위함
+
+
+구성원 및 역할 :
+- 구성원
+: 김석현, 김시연, 오승환, 이재빈, 박진성, 정윤성
+
+- 역할
+: 김석현, 이재빈, 정윤성이 전반적인 BE 담당
+: 김시연 오승환 박진성이 전반적인 FE 담당
+
+
+2. 프로젝트 설계
+
+
+- 수행 절차 및 방법
+: 필수적인 기능 정의 + 사용자의 입장에서 요구사항(기능) 정의 및 팀원간 용어 정의 -> DB초안 설계 -> API명세서 작성 및 DB 구체화 -> DB 테스트 데이터 선정 및 기초 테스트 데이터 삽입 -> 프로젝트 시작 -> 배포 -> 테스트 및 디버깅 
+
+: 기능 정의  구글 스프레드 시트 -> draw io/ERD diagram  DB 초안 설계 및 사용자의 흐름 확인 -> figma 와이어프레임 제작 -> Swagger web API명세 작성 ->파이썬 데이터 크롤링 및 chatgpt사용하여 바우만타입 기입
+
+https://docs.google.com/spreadsheets/d/1Qx0kGDzz5OG1bUafAJhukQ2SBYYy6NOrm8BE1frOuPM/edit?gid=1445545829#gid=1445545829
+
+https://app.diagrams.net/#G1tXUDXm_HuVhV6s1dG1AMuPuFJoesXlYe#%7B%22pageId%22%3A%22y1MlYHFgjragfdeOyQpX%22%7D
+
+https://app.diagrams.net/#G1CXGscugTCb21zP6za6R3joOGgyiU0frq#%7B%22pageId%22%3A%22y1MlYHFgjragfdeOyQpX%22%7D
+
+https://www.figma.com/design/TpYM9p0ptZJvMFspWN4JSy/Re-View?node-id=0-1&p=f&t=6EtTYsxHVnIpFjL0-0
+
+https://app.swaggerhub.com/apis/doadoa/share/1.5.6#/
+
+
+
+
+- DB 설계 ( https://www.erdcloud.com/d/LtrdEFPNN2ReZtcFa )
+: 기초적인 user, baumann, product, review테이블 생성 후 API명세 작성하며 나머지 DB 설계
+
+- 개발 일정
+: WBS
+10/21~11/2 - 기획 및 설계 
+11/3~11/20 - 필수 기능 개발(UI 및 BE 비즈니스 로직)
+11/21~12/07 - 주요 기능 개발 및 배포 준비(이미지 처리 시스템 및 보상체계 관련 시스템 등)
+12/08~12/15 - 발표 준비 및 배포/테스트/UI 개선 및 디자인 보완
+
+개발 내용
+- 적용 기술
+:React, Spring Boot, Oracle, Mybatis, Github, Docker, MinIO, AWS 등
+
+- 전반적인 아키텍쳐
+: EC2 위에 Docker로 Oracle, MinIO를 올리고 FE와 BE는 EC2에서 따로 처리(nginx통해)
+
+- 주요 구현 기능
+: 
+
+- 구현 영상
+:
+
+
+
+
+개발 후기 및 느낀점 (향후 개선 사항 및 기대 효과 / 향후 프로젝트 보완 계획 / 프로젝트 진행 소감)
+
+위 사항에 대해서는 팀원들과 이야기하고 정해야할듯
