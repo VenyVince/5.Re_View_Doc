@@ -1,7 +1,10 @@
 5조 Re_View 관련 문서입니다
 
-##소스코드 Git |  https://github.com/VenyVince/Re_View.git
-##EC2 서버 | http://3.115.212.100/
+소스코드 Git |  https://github.com/VenyVince/Re_View.git
+
+---
+
+EC2 서버 | http://3.115.212.100/
 
 
 ---
