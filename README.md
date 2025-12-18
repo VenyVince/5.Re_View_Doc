@@ -7,6 +7,10 @@ EC2 서버 | http://3.115.212.100/
 
 ---
 
+시연 영상 | https://www.youtube.com/watch?v=kP2HrcrGmvU
+
+---
+
 # API 테스트 예제 (React ↔ Spring Boot)
 
 ## 0. 첨언
